@@ -16,9 +16,12 @@ export async function GET(req: any, res: any) {
 
         sharp(imageData)
           .resize(100)
+          .toFormat("webp")
           .toBuffer()
           .then((resizedData: any) => {
             console.log(resizedData.toString("base64"));
+            res.send(resizedData);
+
             // Now you have the resized image data as a base64 string
           })
           .catch((err: any) => {
@@ -28,13 +31,6 @@ export async function GET(req: any, res: any) {
       .catch((error) => {
         console.error("Error during image download:", error);
       });
-
-    const resizedImageBuffer = await sharp(example)
-      .resize({ width: 100, height: 100 })
-      .toFormat("webp")
-      .toBuffer();
-
-    res.type("webp").send(resizedImageBuffer);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
