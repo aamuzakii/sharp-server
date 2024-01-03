@@ -56,7 +56,7 @@ export async function POST(req: NextApiRequest, res: any) {
       .toBuffer();
 
     return new Response(resizedData, {
-      headers: { "content-type": "image/webp" },
+      headers: { "content-type": "image/webp", "Cache-Control": "public" },
     });
 
     // Now you have the resized image data as a base64 string
