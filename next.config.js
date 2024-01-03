@@ -1,26 +1,20 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-// next.config.js
-
 module.exports = {
   async headers() {
     return [
       {
-        // Enable CORS for all API routes
-        source: "/api/:path*", // Adjust this source pattern based on your API route structure
+        // matching all API routes
+        source: "/api/:path*",
         headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*", // Change this to specific origins in production
-          },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
           {
             key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
           },
           {
             key: "Access-Control-Allow-Headers",
-            value: "Content-Type",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         ],
       },
