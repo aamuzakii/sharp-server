@@ -39,6 +39,7 @@ function runMiddleware(
 export async function GET(req: NextRequest, res: any) {
   const { searchParams } = new URL(req.url);
   const link = searchParams.get("link");
+  let size = parseInt(searchParams.get("size") as string);
 
   await runMiddleware(
     req as unknown as NextApiRequest,
@@ -59,9 +60,8 @@ export async function GET(req: NextRequest, res: any) {
   const axios = setupCache(instance);
 
   try {
-    const width = 1000;
-
-    const redisKey = `${link}_${width}`;
+    if (!size) size = 1000;
+    const redisKey = `${link}_${size}`;
 
     const cachedImage = await getImageFromCache(redisKey);
 
@@ -78,7 +78,7 @@ export async function GET(req: NextRequest, res: any) {
     const imageData = Buffer.from(response.data, "binary");
 
     const resizedData = await sharp(imageData)
-      .resize({ width: 1000, height: 1000, fit: "inside" })
+      .resize({ width: size, height: size, fit: "inside" })
       .toFormat("webp")
       .toBuffer();
 
