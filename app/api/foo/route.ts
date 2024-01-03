@@ -6,9 +6,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 import Redis from "ioredis";
 
-const redis = new Redis(
-  "redis://default:66320a917ae34f949cfc1324bc3fbe09@us1-mature-aphid-38511.upstash.io:38511"
-);
+const redis = new Redis(process.env.UPSTASH_AUTH || "");
 
 async function getImageFromCache(link: string) {
   const cachedImage = await redis.get(link);
@@ -37,9 +35,6 @@ function runMiddleware(
     });
   });
 }
-
-const example =
-  "https://images.ctfassets.net/0wvobgztd3t0/4WCqda0hBPgK8LAyphHxfJ/9aedb4cf264da5d6952f4966fe1fcf16/A_15_-_Photo.jpg";
 
 export async function POST(req: NextApiRequest, res: any) {
   await runMiddleware(
