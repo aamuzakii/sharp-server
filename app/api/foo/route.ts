@@ -65,3 +65,11 @@ export async function POST(req: NextApiRequest, res: any) {
     return NextResponse.json({ error: "user" });
   }
 }
+
+export async function GET(req: NextApiRequest, res: any) {
+  if (req.method === "OPTIONS") {
+    // Preflight request. Reply successfully without actually processing the request.
+    res.status(200).end();
+    return;
+  }
+}
