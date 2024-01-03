@@ -6,7 +6,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Seracon BE Server&nbsp;
+          Seracon BE Server ok&nbsp;
           <code className={styles.code}>app/page.tsx</code>
         </p>
         <div>
