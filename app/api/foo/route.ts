@@ -64,5 +64,29 @@ export async function POST(req: NextApiRequest, res: any) {
     } as unknown as NextApiResponse,
     cors
   );
-  console.log("masuk post");
+
+  let passedValue = await new Response(req.body).text();
+  let reqBody = JSON.parse(passedValue);
+
+  try {
+    const response = await axios.get(reqBody.link, {
+      responseType: "arraybuffer",
+    });
+    const imageData = Buffer.from(response.data, "binary");
+
+    const resizedData = await sharp(imageData)
+      .resize({ width: 1000, height: 1000, fit: "inside" })
+      .toFormat("webp")
+      .toBuffer();
+
+    console.log(resizedData.toString("base64"));
+    return new Response(resizedData, {
+      headers: { "content-type": "image/png" },
+    });
+
+    // Now you have the resized image data as a base64 string
+  } catch (error) {
+    console.error("Error during image processing:", error);
+    return NextResponse.json({ error: "user" });
+  }
 }
