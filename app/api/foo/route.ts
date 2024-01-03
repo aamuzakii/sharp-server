@@ -8,13 +8,13 @@ import Redis from "ioredis";
 
 const redis = new Redis(process.env.UPSTASH_AUTH || "");
 
-async function getImageFromCache(link: string) {
-  const cachedImage = await redis.get(link);
+async function getImageFromCache(key: string) {
+  const cachedImage = await redis.get(key);
   return cachedImage ? Buffer.from(cachedImage, "base64") : null;
 }
 
-async function setImageInCache(link: string, imageData: any) {
-  await redis.set(link, imageData.toString("base64"), "EX", 3600); // TTL set to 1 hour (3600 seconds)
+async function setImageInCache(key: string, imageData: any) {
+  await redis.set(key, imageData.toString("base64"), "EX", 3600); // TTL set to 1 hour (3600 seconds)
 }
 
 const cors = Cors({
@@ -56,7 +56,11 @@ export async function POST(req: NextApiRequest, res: any) {
   try {
     const link = reqBody.link;
 
-    const cachedImage = await getImageFromCache(link);
+    const width = 1000;
+
+    const redisKey = `${link}_${width}`;
+
+    const cachedImage = await getImageFromCache(redisKey);
 
     if (cachedImage) {
       console.log("cache exist");
@@ -76,7 +80,7 @@ export async function POST(req: NextApiRequest, res: any) {
       .toBuffer();
 
     // Cache the resized image
-    setImageInCache(link, resizedData);
+    setImageInCache(redisKey, resizedData);
 
     // Return the resized image
     return new Response(resizedData, {
