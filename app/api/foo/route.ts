@@ -36,9 +36,9 @@ function runMiddleware(
   });
 }
 
-export async function POST(req: NextApiRequest, res: any) {
+export async function POST(req: NextRequest, res: any) {
   await runMiddleware(
-    req,
+    req as unknown as NextApiRequest,
     {
       ...res,
       getHeader: (name: string) => res.headers?.get(name),
@@ -92,7 +92,7 @@ export async function POST(req: NextApiRequest, res: any) {
   }
 }
 
-export async function GET(req: NextApiRequest, res: any) {
+export async function GET(req: Request, res: any) {
   if (req.method === "OPTIONS") {
     // Preflight request. Reply successfully without actually processing the request.
     res.status(200).end();
