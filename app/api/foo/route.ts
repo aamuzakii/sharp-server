@@ -4,6 +4,20 @@ import Axios from "axios";
 import { setupCache } from "axios-cache-interceptor";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
+import Redis from "ioredis";
+
+const redis = new Redis(
+  "redis://default:66320a917ae34f949cfc1324bc3fbe09@us1-mature-aphid-38511.upstash.io:38511"
+);
+
+async function getImageFromCache(link: string) {
+  const cachedImage = await redis.get(link);
+  return cachedImage ? Buffer.from(cachedImage, "base64") : null;
+}
+
+async function setImageInCache(link: string, imageData: any) {
+  await redis.set(link, imageData.toString("base64"), "EX", 3600); // TTL set to 1 hour (3600 seconds)
+}
 
 const cors = Cors({
   methods: ["POST", "GET", "HEAD"],
@@ -45,7 +59,18 @@ export async function POST(req: NextApiRequest, res: any) {
   const axios = setupCache(instance);
 
   try {
-    const response = await axios.get(reqBody.link, {
+    const link = reqBody.link;
+
+    const cachedImage = await getImageFromCache(link);
+
+    if (cachedImage) {
+      console.log("cache exist");
+      return new Response(cachedImage, {
+        headers: { "content-type": "image/webp", "Cache-Control": "public" },
+      });
+    }
+
+    const response = await axios.get(link, {
       responseType: "arraybuffer",
     });
     const imageData = Buffer.from(response.data, "binary");
@@ -55,11 +80,13 @@ export async function POST(req: NextApiRequest, res: any) {
       .toFormat("webp")
       .toBuffer();
 
+    // Cache the resized image
+    setImageInCache(link, resizedData);
+
+    // Return the resized image
     return new Response(resizedData, {
       headers: { "content-type": "image/webp", "Cache-Control": "public" },
     });
-
-    // Now you have the resized image data as a base64 string
   } catch (error) {
     console.error("Error during image processing:", error);
     return NextResponse.json({ error: "user" });
