@@ -327,6 +327,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios-cache-interceptor@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "axios-cache-interceptor@npm:1.4.1"
+  dependencies:
+    cache-parser: "npm:1.2.4"
+    fast-defer: "npm:1.1.8"
+    object-code: "npm:1.3.2"
+  peerDependencies:
+    axios: ^1
+  checksum: 09badd363b905ade8784ec2c4599a7f26856a2f6a4e208a5e0180acfd28b1ef60c1195663f6c5c5360e0b27a89baffbff3a8a609bf39d2c2317f63fcccf57c53
+  languageName: node
+  linkType: hard
+
 "axios@npm:^1.6.3":
   version: 1.6.3
   resolution: "axios@npm:1.6.3"
@@ -344,6 +357,13 @@ __metadata:
   dependencies:
     streamsearch: "npm:^1.1.0"
   checksum: fa7e836a2b82699b6e074393428b91ae579d4f9e21f5ac468e1b459a244341d722d2d22d10920cdd849743dbece6dca11d72de939fb75a7448825cf2babfba1f
+  languageName: node
+  linkType: hard
+
+"cache-parser@npm:1.2.4":
+  version: 1.2.4
+  resolution: "cache-parser@npm:1.2.4"
+  checksum: 5f9ee096b3cd42224208aae8bb82f4dc63b9a49f6d92898973854dc2e63fef281ef658932ea9c0b9c15ba0ff18f51a43a007624f1ef60820b06047488f1125fb
   languageName: node
   linkType: hard
 
@@ -434,6 +454,13 @@ __metadata:
   version: 2.0.2
   resolution: "detect-libc@npm:2.0.2"
   checksum: a9f4ffcd2701525c589617d98afe5a5d0676c8ea82bcc4ed6f3747241b79f781d36437c59a5e855254c864d36a3e9f8276568b6b531c28d6e53b093a15703f11
+  languageName: node
+  linkType: hard
+
+"fast-defer@npm:1.1.8":
+  version: 1.1.8
+  resolution: "fast-defer@npm:1.1.8"
+  checksum: 4537cf81ce3e1505adba01dfe232231271162c8365427b360e0e86c8e4bf65f08d9e6ced1bd063fbafb48376f2ff152d1cad3cb25237126492921a15ce203e88
   languageName: node
   linkType: hard
 
@@ -594,6 +621,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-code@npm:1.3.2":
+  version: 1.3.2
+  resolution: "object-code@npm:1.3.2"
+  checksum: 4b8f3b96b17d456bb9a3226bbe38c2ea20d54e3d88cb53a8bc6d9d752709257f7b8b53a2a0cb4ac1dd6993b92b3dce166b5c762aaf4f40598932783b60989b25
+  languageName: node
+  linkType: hard
+
 "picocolors@npm:^1.0.0":
   version: 1.0.0
   resolution: "picocolors@npm:1.0.0"
@@ -669,6 +703,7 @@ __metadata:
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"
     axios: "npm:^1.6.3"
+    axios-cache-interceptor: "npm:^1.4.1"
     cors: "npm:^2.8.5"
     next: "npm:14.0.4"
     react: "npm:^18"

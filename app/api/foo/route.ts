@@ -79,7 +79,6 @@ export async function POST(req: NextApiRequest, res: any) {
       .toFormat("webp")
       .toBuffer();
 
-    console.log(resizedData.toString("base64"));
     return new Response(resizedData, {
       headers: { "content-type": "image/png" },
     });
