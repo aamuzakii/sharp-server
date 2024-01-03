@@ -5,11 +5,7 @@ import axios from "axios";
 const example =
   "https://images.ctfassets.net/0wvobgztd3t0/4WCqda0hBPgK8LAyphHxfJ/9aedb4cf264da5d6952f4966fe1fcf16/A_15_-_Photo.jpg";
 
-export async function POST(req: any, res: any) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
+export async function GET(req: any, res: any) {
   if (req.method === "OPTIONS") {
     // Preflight request. Reply successfully without actually processing the request.
     res.status(200).end();
