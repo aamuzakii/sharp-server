@@ -55,6 +55,14 @@ export async function GET(req: NextApiRequest, res: any) {
 }
 
 export async function POST(req: NextApiRequest, res: any) {
-  await runMiddleware(req, res, cors);
+  await runMiddleware(
+    req,
+    {
+      ...res,
+      getHeader: (name: string) => res.headers?.get(name),
+      setHeader: (name: string, value: string) => res.headers?.set(name, value),
+    } as unknown as NextApiResponse,
+    cors
+  );
   console.log("masuk post");
 }
