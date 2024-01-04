@@ -68,7 +68,7 @@ export async function GET(req: NextRequest, res: any) {
     if (cachedImage) {
       console.log("cache exist");
       return new Response(cachedImage, {
-        headers: { "content-type": "image/webp", "Cache-Control": "public" },
+        headers: { "content-type": "image/webp", "Cache-Control": "private" },
       });
     }
 
@@ -87,10 +87,10 @@ export async function GET(req: NextRequest, res: any) {
 
     // Return the resized image
     return new Response(resizedData, {
-      headers: { "content-type": "image/webp", "Cache-Control": "public" },
+      headers: { "content-type": "image/webp", "Cache-Control": "private" },
     });
   } catch (error) {
     console.error("Error during image processing:", error);
-    return NextResponse.json({ error: "user" });
+    return NextResponse.json({ error: "error, please check server log" });
   }
 }
