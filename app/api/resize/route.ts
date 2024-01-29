@@ -78,6 +78,7 @@ export async function GET(req: NextRequest, res: any) {
     const imageData = Buffer.from(response.data, "binary");
 
     const resizedData = await sharp(imageData)
+      .rotate() // If no angle is provided, it is determined from the EXIF data
       .resize({ width: size, height: size, fit: "inside" })
       .toFormat("webp")
       .toBuffer();
@@ -90,7 +91,7 @@ export async function GET(req: NextRequest, res: any) {
       headers: { "content-type": "image/webp", "Cache-Control": "private" },
     });
   } catch (error) {
-    console.error("Error during image processing:", error);
+    console.error("Error during image processing:", error, link);
     return NextResponse.json({ error: "error, please check server log" });
   }
 }
